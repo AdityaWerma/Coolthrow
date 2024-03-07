@@ -5,6 +5,7 @@ import 'package:coolthrow/models/category.dart';
 import 'products.dart';
 
 final databaseRef = FirebaseDatabase.instance.ref().child('Categories');
+//linked to firebase
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
