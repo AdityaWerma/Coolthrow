@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "653944848540",
+    "firebase_url": "https://coolthrow-74842-default-rtdb.firebaseio.com",
+    "project_id": "coolthrow-74842",
+    "storage_bucket": "coolthrow-74842.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653944848540:android:46041b395d792c66a8ad59",
+        "android_client_info": {
+          "package_name": "com.dhigence.coolthrow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653944848540-91ot6ln271867uj4mo0du25a2k1h38bi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYCwyKBZfdmZ77qNDH6T9YfVCqXoyKwC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653944848540-91ot6ln271867uj4mo0du25a2k1h38bi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
