@@ -43,6 +43,7 @@ dependencies:
   firebase_database: ^10.4.6
   carousel_slider: ^4.2.1
   rxdart: ^0.27.7
+  upi_india: ^3.0.1
 
 dev_dependencies:
   flutter_test:

@@ -30,7 +30,7 @@ class ProductItem extends StatelessWidget {
             FadeInImage(
               placeholder: MemoryImage(kTransparentImage),
               image: NetworkImage(product.imageUrl),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
               height: 200,
               width: double.infinity,
             ),

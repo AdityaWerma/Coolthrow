@@ -1,3 +1,4 @@
+import 'package:coolthrow/screens/upi_payment.dart';
 import 'package:flutter/material.dart';
 
 import '../models/product.dart';
@@ -87,7 +88,17 @@ class ProductDetailsScreen extends StatelessWidget {
                     const BorderSide(color: Colors.blue, width: 1.0),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (ctx) => UPIPaymentScreen(
+                        title: product.title,
+                        price: product.price,
+                      ),
+                    ),
+                  );
+                },
                 child: const Text(
                   'Buy now',
                   style: TextStyle(
