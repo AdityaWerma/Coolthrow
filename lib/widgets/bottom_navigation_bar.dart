@@ -25,12 +25,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
           label: 'Orders',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.add_shopping_cart),
-          label: 'Cart',
+          icon: Icon(Icons.fastfood),
+          label: 'Eats',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.chat),
-          label: 'Chat',
+          icon: Icon(Icons.account_circle_outlined),
+          label: 'You',
         ),
       ],
       currentIndex: currentIndex,

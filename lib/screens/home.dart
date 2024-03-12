@@ -82,7 +82,7 @@ class _HomeScreen extends State<HomeScreen> {
                   } else {
                     return const Center(
                       child:
-                          CircularProgressIndicator(), // Show loading indicator
+                          CircularProgressIndicator(color: Colors.white,), // Show loading indicator
                     );
                   }
                 }),
@@ -177,7 +177,7 @@ class _HomeScreen extends State<HomeScreen> {
                         } else {
                           return const Center(
                             child:
-                                CircularProgressIndicator(), // Show loading indicator
+                                CircularProgressIndicator(color: Colors.white,), // Show loading indicator
                           );
                         }
                       }),
@@ -272,7 +272,7 @@ class _HomeScreen extends State<HomeScreen> {
                         } else {
                           return const Center(
                             child:
-                                CircularProgressIndicator(), // Show loading indicator
+                                CircularProgressIndicator(color: Colors.white,), // Show loading indicator
                           );
                         }
                       }),
@@ -368,7 +368,7 @@ class _HomeScreen extends State<HomeScreen> {
                         } else {
                           return const Center(
                             child:
-                            CircularProgressIndicator(), // Show loading indicator
+                            CircularProgressIndicator(color: Colors.white,), // Show loading indicator
                           );
                         }
                       }),
@@ -467,7 +467,7 @@ class _HomeScreen extends State<HomeScreen> {
                         } else {
                           return const Center(
                             child:
-                            CircularProgressIndicator(), // Show loading indicator
+                            CircularProgressIndicator(color: Colors.white,), // Show loading indicator
                           );
                         }
                       }),

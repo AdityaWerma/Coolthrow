@@ -1,13 +1,13 @@
+import 'package:coolthrow/screens/eats.dart';
 import 'package:coolthrow/screens/home.dart';
 import 'package:coolthrow/screens/orders.dart';
+import 'package:coolthrow/screens/search.dart';
 import 'package:flutter/material.dart';
 import 'package:coolthrow/screens/categories.dart';
-import 'package:coolthrow/screens/filters.dart';
 import 'package:coolthrow/widgets/bottom_navigation_bar.dart';
 
 import '../models/product.dart';
 import 'account.dart';
-import 'chat.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -56,52 +56,35 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
-  void _setScreen(String identifier) {
-    Navigator.of(context).pop(); //closing the drawer manulally
-    if (identifier == 'filters') {
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (ctx) => const FiltersScreen(),
-      ));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Widget activePage = const HomeScreen();
 
     if (_selectedIndex == 1) {
-      activePage = const CategoriesScreen(
-      );
+      activePage = const CategoriesScreen();
     }
     if (_selectedIndex == 2) {
       activePage = const OrdersScreen();
     }
-    // if (_selectedIndex == 3) {
-    //   activePage = ProductsScreen(
-    //     products: _favoriteMeals,
-    //     // onToggleFavorite: _toggleMealFavouriteStatus,
-    //     title: '',
-    //   );
-    // }
+    if (_selectedIndex == 3) {
+      activePage = const EatsScreen();
+    }
     if (_selectedIndex == 4) {
-      activePage = const ChatScreen();
-
+      activePage = const AccountScreen();
     }
 
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
+            icon: const Icon(Icons.search),
             onPressed: () {
-              // FirebaseAuth.instance.signOut();
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const AccountScreen(),
-              ),);
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (ctx) => const SearchScreen(),
+                ),
+              );
             },
-            icon: Icon(
-              Icons.account_circle_outlined,
-              color: Theme.of(context).colorScheme.primary,
-            ),
           ),
         ],
         backgroundColor: Colors.transparent,

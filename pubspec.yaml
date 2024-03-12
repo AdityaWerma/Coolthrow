@@ -44,6 +44,11 @@ dependencies:
   carousel_slider: ^4.2.1
   rxdart: ^0.27.7
   upi_india: ^3.0.1
+  cloud_firestore: ^4.15.8
+  flutter_gemini: ^2.0.3
+  flutter_markdown: ^0.6.21
+  lottie: ^3.1.0
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:

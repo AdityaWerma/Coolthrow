@@ -1,5 +1,6 @@
 import 'package:coolthrow/screens/categories.dart';
 import 'package:coolthrow/screens/tabs.dart';
+import 'package:coolthrow/screens/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:coolthrow/screens/phone_number.dart';
@@ -137,7 +138,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const TabsScreen())));
+                                  builder: (context) => const UserInfoScreen())));
                     } catch (e) {
                       setState(() {
                         showDialog(

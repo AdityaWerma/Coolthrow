@@ -43,7 +43,7 @@ class _UPIPaymentScreenState extends State<UPIPaymentScreen> {
   Future<UpiResponse> initiateTransaction(UpiApp app) async {
     return _upiIndia.startTransaction(
       app: app,
-      receiverUpiId: "akv.small.api@okaxis",
+      receiverUpiId: "co.olthrow@axisbank",
       receiverName: 'Coolthrow',
       transactionRefId: 'TestingUpiIndiaPlugin',
       transactionNote: 'Payment for ${widget.title}',
@@ -127,6 +127,8 @@ class _UPIPaymentScreenState extends State<UPIPaymentScreen> {
         print('Received an Unknown transaction status');
     }
   }
+
+
 
   Widget displayTransactionData(title, body) {
     return Padding(

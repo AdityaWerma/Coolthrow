@@ -1,3 +1,5 @@
+import 'package:coolthrow/screens/phone_number.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:coolthrow/screens/tabs.dart';
 
@@ -20,7 +22,20 @@ class _SplashScreenState extends State<SplashScreen> {
       // Navigate to the next screen after the splash screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const TabsScreen()),
+        MaterialPageRoute(
+          builder: (context) => StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (ctx, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const SplashScreen();
+              }
+              if (snapshot.hasData) {
+                return const TabsScreen();
+              }
+              return const PhoneNumberScreen();
+            },
+          ),
+        ),
       );
     });
   }
@@ -28,9 +43,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Colors.white,
+      backgroundColor: Colors.white,
       body: Center(
-        child: Image.asset('assets/images/Coolthrow_logo.png',width: 200,height: 200,),
+        child: Image.asset(
+          'assets/images/Coolthrow_logo.png',
+          width: 200,
+          height: 200,
+        ),
       ),
     );
   }
