@@ -1,3 +1,4 @@
+import 'package:coolthrow/screens/order_placed.dart';
 import 'package:flutter/material.dart';
 import 'package:upi_india/upi_india.dart';
 
@@ -43,11 +44,11 @@ class _UPIPaymentScreenState extends State<UPIPaymentScreen> {
   Future<UpiResponse> initiateTransaction(UpiApp app) async {
     return _upiIndia.startTransaction(
       app: app,
-      receiverUpiId: "co.olthrow@axisbank",
+      receiverUpiId: "bharatpe.8n0q0e3v4b79518@fbpe",
       receiverName: 'Coolthrow',
       transactionRefId: 'TestingUpiIndiaPlugin',
       transactionNote: 'Payment for ${widget.title}',
-      amount: double.parse(widget.price),
+      amount: double.parse('1'),
     );
   }
 
@@ -116,6 +117,14 @@ class _UPIPaymentScreenState extends State<UPIPaymentScreen> {
     switch (status) {
       case UpiPaymentStatus.SUCCESS:
         print('Transaction Successful');
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (ctx) => const OrderPlacedScreen(),
+          ),
+        );
+
         break;
       case UpiPaymentStatus.SUBMITTED:
         print('Transaction Submitted');
@@ -215,19 +224,26 @@ class _UPIPaymentScreenState extends State<UPIPaymentScreen> {
                   String approvalRef = upiResponse.approvalRefNo ?? 'N/A';
                   _checkTxnStatus(status);
 
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        displayTransactionData('Transaction Id', txnId),
-                        displayTransactionData('Response Code', resCode),
-                        displayTransactionData('Reference Id', txnRef),
-                        displayTransactionData('Status', status.toUpperCase()),
-                        displayTransactionData('Approval No', approvalRef),
-                      ],
-                    ),
+                  if(upiResponse.status == UpiPaymentStatus.SUCCESS){
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          displayTransactionData('Transaction Id', txnId),
+                          displayTransactionData('Response Code', resCode),
+                          displayTransactionData('Reference Id', txnRef),
+                          displayTransactionData('Status', status.toUpperCase()),
+                          displayTransactionData('Approval No', approvalRef),
+                        ],
+                      ),
+                    );
+                  }
+                  return const Center(
+                    child: Text(''),
                   );
+
+
                 } else {
                   return const Center(
                     child: Text(''),

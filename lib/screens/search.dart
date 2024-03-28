@@ -79,6 +79,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 // Handle list data
                 for (var item in data) {
                   products.add(Product(
+                      shopId: item['shopId'].toString(),
                       id: item['id'].toString(),
                       title: item['title'].toString(),
                       imageUrl: item['imageAddress'].toString(),
@@ -89,6 +90,7 @@ class _SearchScreenState extends State<SearchScreen> {
               } else if (data != null && data is Map) {
                 data.forEach((key, value) {
                   products.add(Product(
+                      shopId: value['shopId'].toString(),
                       id: value['id'].toString(),
                       categoryBelong: '',
                       title: value['title'].toString(),

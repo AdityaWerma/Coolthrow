@@ -20,8 +20,6 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> inputList = List.filled(6, ''); // List to store input
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -32,93 +30,99 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
               opacity: 0.06, // Set opacity value between 0.0 and 1.0
               child: Image.asset(
                 'assets/images/Cart_girl.png',
-                // Replace with your image asset path
-                fit: BoxFit.cover, // Adjust width as needed
+                fit: BoxFit.cover,
               ),
             ),
           ),
 
-          Column(children: [
-            const SizedBox(height: 50),
-            Image.asset(
-              'assets/images/Coolthrow_logo.png',
-              height: 100,
-              width: 100,
-            ),
-            const SizedBox(height: 5),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child: Text(
-                'Coolthrow will need to verify your account. As we are only available in india, +91 is automatically added.',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          Column(
+            children: [
+              const SizedBox(height: 50),
+              Image.asset(
+                'assets/images/Coolthrow_logo.png',
+                height: 100,
+                width: 100,
               ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(50, 0, 50, 50),
-                child: Column(children: [
-                  Container(
-                    width: 250,
-                    height: 60,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black), // Border color
-                      borderRadius: BorderRadius.circular(8), // Border radius
-                    ),
-                    child: TextField(
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25
-                      ),
-                      autocorrect: false,
-                      maxLength: 10,
-                      keyboardType: TextInputType.phone,
-                      textAlign: TextAlign.left,
-                      decoration: const InputDecoration(
-                        counterText: '',
-                        border: InputBorder.none,
-                        hintText: 'Enter the phone number',
-                        hintStyle: TextStyle(fontSize: 17),
-                      ),
-                      onChanged: (value) {
-                        phoneNumber = value;
-                      },
-                      controller: _phoneNumberController,
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await FirebaseAuth.instance.verifyPhoneNumber(
-                        phoneNumber: '+91$phoneNumber',
-                        verificationCompleted:
-                            (PhoneAuthCredential credential) {},
-                        verificationFailed: (FirebaseAuthException e) {},
-                        codeSent: (String verificationId, int? resendToken) {
-                          PhoneNumberScreen.verify = verificationId;
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => OTPScreen(
-                                        phNum: phoneNumber,
-                                      )));
+              const SizedBox(height: 5),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                child: Text(
+                  'Coolthrow will need to verify your account. As we are only available in india, +91 is automatically added.',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(50, 0, 50, 50),
+                  child: Column(
+                    children: [
+                      TextField(
+                        autofocus: true,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 17),
+                        autocorrect: false,
+                        maxLength: 10,
+                        keyboardType: TextInputType.phone,
+                        textAlign: TextAlign.left,
+                        decoration: const InputDecoration(
+                          counterText: '',
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          hintText: 'Enter the phone number',
+                          hintStyle: TextStyle(fontSize: 17),
+                        ),
+                        onChanged: (value) {
+                          phoneNumber = value;
                         },
-                        codeAutoRetrievalTimeout: (String verificationId) {},
-                      );
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xFF0A848A)),
-                    ),
-                    child: const Text("Send OTP",
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                        controller: _phoneNumberController,
+                      ),
+                      const SizedBox(height: 16.0),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await FirebaseAuth.instance.verifyPhoneNumber(
+                            phoneNumber: '+91$phoneNumber',
+                            verificationCompleted:
+                                (PhoneAuthCredential credential) {},
+                            verificationFailed: (FirebaseAuthException e) {},
+                            codeSent:
+                                (String verificationId, int? resendToken) {
+                              PhoneNumberScreen.verify = verificationId;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OTPScreen(
+                                    phNum: phoneNumber,
+                                  ),
+                                ),
+                              );
+                            },
+                            codeAutoRetrievalTimeout:
+                                (String verificationId) {},
+                          );
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0xFF0A848A)),
+                        ),
+                        child: const Text("Send OTP",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                      ),
+                    ],
                   ),
-                ]),
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
         ],
       ),
     );

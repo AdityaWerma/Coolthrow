@@ -1,12 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:coolthrow/models/product.dart';
 import 'package:coolthrow/screens/product_details.dart';
-import 'package:coolthrow/screens/products.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
-import '../models/category.dart';
-import '../widgets/category_grid_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,9 +22,9 @@ class _HomeScreen extends State<HomeScreen> {
     final dbRecommendedProducts =
         FirebaseDatabase.instance.ref('Home/RecommendedProducts');
     final dbTopRatedProducts =
-    FirebaseDatabase.instance.ref('Home/TopRatedProducts');
+        FirebaseDatabase.instance.ref('Home/TopRatedProducts');
     final dbSuggestedProducts =
-    FirebaseDatabase.instance.ref('Home/SuggestedProducts');
+        FirebaseDatabase.instance.ref('Home/SuggestedProducts');
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -81,8 +77,9 @@ class _HomeScreen extends State<HomeScreen> {
                     );
                   } else {
                     return const Center(
-                      child:
-                          CircularProgressIndicator(color: Colors.white,), // Show loading indicator
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ), // Show loading indicator
                     );
                   }
                 }),
@@ -115,10 +112,12 @@ class _HomeScreen extends State<HomeScreen> {
                           List<dynamic> specification = [];
                           List<dynamic> price = [];
                           List<dynamic> categoryBelong = [];
+                          List<dynamic> shopId = [];
 
                           try {
                             if (data is List) {
                               for (var item in data) {
+                                shopId.add(item['shopId']);
                                 imageAddress.add(item['imageAddress']);
                                 id.add(item['id']);
                                 title.add(item['title']);
@@ -128,13 +127,13 @@ class _HomeScreen extends State<HomeScreen> {
                               }
                             } else if (data != null && data is Map) {
                               data.forEach((key, value) {
+                                shopId.add(value['shopId']);
                                 imageAddress.add(value['imageAddress']);
                                 id.add(value['id']);
                                 title.add(value['title']);
                                 price.add(value['price']);
                                 specification.add(value['specification']);
                                 categoryBelong.add(value['categoryBelong']);
-
                               });
                             }
                           } catch (e) {
@@ -155,12 +154,16 @@ class _HomeScreen extends State<HomeScreen> {
                                             builder: (ctx) =>
                                                 ProductDetailsScreen(
                                               product: Product(
-                                                categoryBelong: categoryBelong[index],
+                                                shopId:
+                                                    shopId[index].toString(),
+                                                categoryBelong:
+                                                    categoryBelong[index],
                                                 id: id[index].toString(),
                                                 title: title[index],
                                                 imageUrl: imageAddress[index],
                                                 price: price[index].toString(),
-                                                specification: specification[index],
+                                                specification:
+                                                    specification[index],
                                               ),
                                             ),
                                           ),
@@ -176,8 +179,9 @@ class _HomeScreen extends State<HomeScreen> {
                           );
                         } else {
                           return const Center(
-                            child:
-                                CircularProgressIndicator(color: Colors.white,), // Show loading indicator
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ), // Show loading indicator
                           );
                         }
                       }),
@@ -212,21 +216,22 @@ class _HomeScreen extends State<HomeScreen> {
                           List<dynamic> specification = [];
                           List<dynamic> price = [];
                           List<dynamic> categoryBelong = [];
-
+                          List<dynamic> shopId = [];
 
                           try {
                             if (data is List) {
                               for (var item in data) {
+                                shopId.add(item['shopId']);
                                 imageAddress.add(item['imageAddress']);
                                 id.add(item['id']);
                                 title.add(item['title']);
                                 price.add(item['price']);
                                 specification.add(item['specification']);
                                 categoryBelong.add(item['categoryBelong']);
-
                               }
                             } else if (data != null && data is Map) {
                               data.forEach((key, value) {
+                                shopId.add(value['shopId']);
                                 imageAddress.add(value['imageAddress']);
                                 id.add(value['id']);
                                 title.add(value['title']);
@@ -252,12 +257,15 @@ class _HomeScreen extends State<HomeScreen> {
                                           builder: (ctx) =>
                                               ProductDetailsScreen(
                                             product: Product(
-                                              categoryBelong: categoryBelong[index],
+                                              shopId: shopId[index].toString(),
+                                              categoryBelong:
+                                                  categoryBelong[index],
                                               id: id[index].toString(),
                                               title: title[index],
                                               imageUrl: imageAddress[index],
                                               price: price[index].toString(),
-                                              specification: specification[index],
+                                              specification:
+                                                  specification[index],
                                             ),
                                           ),
                                         ),
@@ -271,8 +279,9 @@ class _HomeScreen extends State<HomeScreen> {
                                   ));
                         } else {
                           return const Center(
-                            child:
-                                CircularProgressIndicator(color: Colors.white,), // Show loading indicator
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ), // Show loading indicator
                           );
                         }
                       }),
@@ -299,7 +308,7 @@ class _HomeScreen extends State<HomeScreen> {
                         if (snapshot.hasData &&
                             snapshot.data!.snapshot.value != null) {
                           dynamic data =
-                          snapshot.data!.snapshot.value as dynamic;
+                              snapshot.data!.snapshot.value as dynamic;
 
                           List<dynamic> imageAddress = [];
                           List<dynamic> id = [];
@@ -307,28 +316,28 @@ class _HomeScreen extends State<HomeScreen> {
                           List<dynamic> price = [];
                           List<dynamic> specification = [];
                           List<dynamic> categoryBelong = [];
-
+                          List<dynamic> shopId = [];
 
                           try {
                             if (data is List) {
                               for (var item in data) {
+                                shopId.add(item['shopId']);
                                 imageAddress.add(item['imageAddress']);
                                 id.add(item['id']);
                                 title.add(item['title']);
                                 price.add(item['price']);
                                 specification.add(item['specification']);
                                 categoryBelong.add(item['categoryBelong']);
-
                               }
                             } else if (data != null && data is Map) {
                               data.forEach((key, value) {
+                                shopId.add(value['shopId']);
                                 imageAddress.add(value['imageAddress']);
                                 id.add(value['id']);
                                 title.add(value['title']);
                                 price.add(value['price']);
                                 specification.add(value['specification']);
                                 categoryBelong.add(value['categoryBelong']);
-
                               });
                             }
                           } catch (e) {
@@ -341,34 +350,38 @@ class _HomeScreen extends State<HomeScreen> {
                               scrollDirection: Axis.vertical,
                               itemCount: id.length,
                               itemBuilder: (context, index) => InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (ctx) =>
-                                          ProductDetailsScreen(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (ctx) =>
+                                              ProductDetailsScreen(
                                             product: Product(
-                                              categoryBelong: categoryBelong[index],
-                                              id: id[index].toString(),
-                                              title: title[index],
-                                              imageUrl: imageAddress[index],
-                                              price: price[index].toString(),
-                                              specification: specification[index]
-                                            ),
+                                                shopId:
+                                                    shopId[index].toString(),
+                                                categoryBelong:
+                                                    categoryBelong[index],
+                                                id: id[index].toString(),
+                                                title: title[index],
+                                                imageUrl: imageAddress[index],
+                                                price: price[index].toString(),
+                                                specification:
+                                                    specification[index]),
                                           ),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                                      child: Image.network(imageAddress[index]),
                                     ),
-                                  );
-                                },
-                                child: Container(
-                                  padding:
-                                  const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                                  child: Image.network(imageAddress[index]),
-                                ),
-                              ));
+                                  ));
                         } else {
                           return const Center(
-                            child:
-                            CircularProgressIndicator(color: Colors.white,), // Show loading indicator
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ), // Show loading indicator
                           );
                         }
                       }),
@@ -395,39 +408,36 @@ class _HomeScreen extends State<HomeScreen> {
                         if (snapshot.hasData &&
                             snapshot.data!.snapshot.value != null) {
                           dynamic data =
-                          snapshot.data!.snapshot.value as dynamic;
+                              snapshot.data!.snapshot.value as dynamic;
 
                           List<dynamic> imageAddress = [];
                           List<dynamic> id = [];
+                          List<dynamic> shopId = [];
                           List<dynamic> title = [];
                           List<dynamic> price = [];
                           List<dynamic> specification = [];
                           List<dynamic> categoryBelong = [];
 
-
-
                           try {
                             if (data is List) {
                               for (var item in data) {
+                                shopId.add(item['shopId']);
                                 imageAddress.add(item['imageAddress']);
                                 id.add(item['id']);
                                 title.add(item['title']);
                                 price.add(item['price']);
                                 specification.add(item['specification']);
                                 categoryBelong.add(item['categoryBelong']);
-
-
-
                               }
                             } else if (data != null && data is Map) {
                               data.forEach((key, value) {
+                                shopId.add(value['shopId']);
                                 imageAddress.add(value['imageAddress']);
                                 id.add(value['id']);
                                 title.add(value['title']);
                                 price.add(value['price']);
                                 specification.add(value['specification']);
                                 categoryBelong.add(value['categoryBelong']);
-
                               });
                             }
                           } catch (e) {
@@ -440,34 +450,38 @@ class _HomeScreen extends State<HomeScreen> {
                               scrollDirection: Axis.vertical,
                               itemCount: id.length,
                               itemBuilder: (context, index) => InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (ctx) =>
-                                          ProductDetailsScreen(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (ctx) =>
+                                              ProductDetailsScreen(
                                             product: Product(
-                                              categoryBelong: categoryBelong[index],
-                                              id: id[index].toString(),
-                                              title: title[index],
-                                              imageUrl: imageAddress[index],
-                                              price: price[index].toString(),
-                                              specification: specification[index]
-                                            ),
+                                                shopId:
+                                                    shopId[index].toString(),
+                                                categoryBelong:
+                                                    categoryBelong[index],
+                                                id: id[index].toString(),
+                                                title: title[index],
+                                                imageUrl: imageAddress[index],
+                                                price: price[index].toString(),
+                                                specification:
+                                                    specification[index]),
                                           ),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                                      child: Image.network(imageAddress[index]),
                                     ),
-                                  );
-                                },
-                                child: Container(
-                                  padding:
-                                  const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                                  child: Image.network(imageAddress[index]),
-                                ),
-                              ));
+                                  ));
                         } else {
                           return const Center(
-                            child:
-                            CircularProgressIndicator(color: Colors.white,), // Show loading indicator
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ), // Show loading indicator
                           );
                         }
                       }),

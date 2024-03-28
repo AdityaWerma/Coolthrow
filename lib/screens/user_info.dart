@@ -32,6 +32,12 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   }
 
   void _submit() async {
+    final isValid = _form.currentState!.validate();
+
+    if (!isValid) {
+      return;
+    }
+
     _form.currentState!.save();
 
     await FirebaseFirestore.instance.collection('users').doc(_user!.uid).set({
@@ -66,48 +72,41 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
             Center(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(36),
                   child: Form(
                     key: _form,
                     child: Column(
                       children: [
-                        Container(
-                          width: 250,
-                          height: 60,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            // Border color
-                            borderRadius:
-                                BorderRadius.circular(8), // Border radius
-                          ),
-                          child: TextFormField(
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 25),
-                            autocorrect: false,
-                            maxLength: 19,
-                            textAlign: TextAlign.center,
-                            decoration: const InputDecoration(
-                              counterText: '',
-                              border: InputBorder.none,
-                              hintText: 'Enter Your Name',
-                              hintStyle: TextStyle(fontSize: 17),
+                        TextFormField(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                          autocorrect: false,
+                          maxLength: 19,
+                          textAlign: TextAlign.center,
+                          decoration: const InputDecoration(
+                            counterText: '',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
                             ),
-                            enableSuggestions: false,
-                            validator: (value) {
-                              if (value == null ||
-                                  value.isEmpty ||
-                                  value.trim().length < 4) {
-                                return 'Please enter a valid username';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              setState(() {
-                                _enteredUsername = value!;
-                              });
-                            },
+                            hintText: 'Enter Your Name',
+                            hintStyle: TextStyle(fontSize: 17),
                           ),
+                          enableSuggestions: false,
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                value.trim().length < 4) {
+                              return 'Please enter a valid username';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            setState(() {
+                              _enteredUsername = value!;
+                            });
+                          },
                         ),
                         const SizedBox(height: 12),
                         ElevatedButton(

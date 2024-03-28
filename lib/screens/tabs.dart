@@ -19,6 +19,9 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  static const IconData location_on =
+      IconData(0xe3ab, fontFamily: 'MaterialIcons');
+
   int _selectedIndex = 0;
   final List<Product> _favoriteMeals = [];
 
@@ -59,53 +62,84 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     Widget activePage = const HomeScreen();
+    bool isAppBarVisible = true;
 
     if (_selectedIndex == 1) {
       activePage = const CategoriesScreen();
     }
     if (_selectedIndex == 2) {
-      activePage = const OrdersScreen();
+      activePage = const EatsScreen();
+      isAppBarVisible = false;
     }
     if (_selectedIndex == 3) {
-      activePage = const EatsScreen();
+      activePage = const OrdersScreen();
     }
     if (_selectedIndex == 4) {
       activePage = const AccountScreen();
+      isAppBarVisible = false;
     }
 
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (ctx) => const SearchScreen(),
+      appBar: isAppBarVisible
+          ? AppBar(
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => const SearchScreen(),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-        ],
-        backgroundColor: Colors.transparent,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xFFFFE2D1),
-                Color(0xFFDCFCFF),
               ],
-            ),
-          ),
-        ),
-        leading: Image.asset('assets/images/Coolthrow_logo.png'),
-        title: const Text(
-          'Coolthrow',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-        ),
-      ),
+              backgroundColor: Colors.transparent,
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFFFFE2D1),
+                      Color(0xFFDCFCFF),
+                    ],
+                  ),
+                ),
+              ),
+              leading: Image.asset('assets/images/Coolthrow_logo.png'),
+              title: const Text(
+                'Coolthrow',
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+              centerTitle: true,
+              bottom: PreferredSize(
+                preferredSize:
+                    const Size.fromHeight(25.0), // Adjust the height as needed
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  alignment: Alignment.center,
+                  color: const Color(0xFFDCFCFF),
+                  child: const Row(
+                    children: [
+                      SizedBox(width: 9),
+                      Icon(
+                        location_on,
+                        size: 15,
+                        color: Colors.black,
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        'Deliver to Rajkiya Engineering College, Azamgarh',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          : null,
       body: activePage,
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,

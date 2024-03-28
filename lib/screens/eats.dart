@@ -1,81 +1,102 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:coolthrow/models/product.dart';
-import 'package:coolthrow/screens/product_details.dart';
-import 'package:coolthrow/widgets/product_item.dart';
+import 'package:coolthrow/widgets/category_grid_item.dart';
+import 'package:coolthrow/models/category.dart';
+import 'products.dart';
 
-final productsDBRef = FirebaseDatabase.instance.ref().child('Eats');
+final databaseRef = FirebaseDatabase.instance.ref().child('EatsRestaurant');
 
-class EatsScreen extends StatelessWidget {
-  const EatsScreen({
-    super.key,
-  });
+class EatsScreen extends StatefulWidget {
+  const EatsScreen({super.key});
 
-  void selectProduct(BuildContext context, Product product) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => ProductDetailsScreen(
-          product: product,
-        ),
-      ),
-    );
+  @override
+  State<EatsScreen> createState() {
+    return _EatsScreenState();
   }
+}
 
+class _EatsScreenState extends State<EatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder(
-        stream: productsDBRef.onValue,
-        builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
-          if (snapshot.hasData && snapshot.data!.snapshot.value != null) {
-            dynamic data = snapshot.data!.snapshot.value as dynamic;
+        appBar: AppBar(
+          leading: const Icon(Icons.fastfood),
+          centerTitle: true,
+          title: const Text(
+            'Coolthrow Eats',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        body: StreamBuilder(
+          stream: databaseRef.onValue,
+          builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
+            if (snapshot.hasData && snapshot.data!.snapshot.value != null) {
+              dynamic data = snapshot.data!.snapshot.value as dynamic;
 
-            List<Product> products = [];
+              List<dynamic> title = [];
+              List<dynamic> imageAddress = [];
+              List<dynamic> id = [];
 
-            try {
-              if (data is List) {
-                // Check if data is a list
-                // Handle list data
-                for (var item in data) {
-                  products.add(Product(
-                      id: item['id'].toString(),
-                      title: item['title'].toString(),
-                      imageUrl: item['imageAddress'].toString(),
-                      specification: item['specification'].toString(),
-                      price: item['price'].toString(),
-                      categoryBelong: ''));
+              try {
+                if (data is List) {
+                  // Check if data is a list
+                  // Handle list data
+                  for (var item in data) {
+                    title.add(item['title']);
+                    imageAddress.add(item['imageAddress']);
+                    id.add(item['id']);
+                  }
+                } else if (data != null && data is Map) {
+                  data.forEach((key, value) {
+                    title.add(value['title']);
+                    imageAddress.add(value['imageAddress']);
+                    id.add(value['id']);
+                  });
                 }
-              } else if (data != null && data is Map) {
-                data.forEach((key, value) {
-                  products.add(Product(
-                      id: value['id'].toString(),
-                      categoryBelong: '',
-                      title: value['title'].toString(),
-                      imageUrl: value['imageAddress'].toString(),
-                      specification: value['specification'].toString(),
-                      price: value['price'].toString()));
-                });
+              } catch (e) {
+                print(e);
               }
-            } catch (e) {
-              print(e);
-            }
 
-            return ListView.builder(
-              itemCount: snapshot.data!.snapshot.children.length,
-              itemBuilder: (ctx, index) => ProductItem(
-                product: products[index],
-                onSelectProduct: (product) {
-                  selectProduct(context, product);
+              return GridView.builder(
+                itemCount: snapshot.data!.snapshot.children.length,
+                padding: const EdgeInsets.all(24),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 3 / 2,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                ),
+                itemBuilder: (context, index) {
+                  return GridTile(
+                    child: CategoryGridItem(
+                      category: Category(
+                        color: Colors.black,
+                        title: title[index],
+                        id: id[index],
+                        imageAddress: imageAddress[index],
+                      ),
+                      onSelectCategory: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (ctx) => ProductsScreen(
+                              title: title[index],
+                              category: id[index],
+                              isEats: true,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
                 },
-              ),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-    );
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ));
   }
 }

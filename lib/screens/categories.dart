@@ -75,6 +75,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         builder: (ctx) => ProductsScreen(
                           title: title[index],
                           category: id[index],
+                          isEats: false,
                         ),
                       ),
                     );

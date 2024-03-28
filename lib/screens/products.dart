@@ -4,17 +4,17 @@ import 'package:coolthrow/models/product.dart';
 import 'package:coolthrow/screens/product_details.dart';
 import 'package:coolthrow/widgets/product_item.dart';
 
-final productsDBRef = FirebaseDatabase.instance.ref().child('Products');
-
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({
     super.key,
     this.title,
     required this.category,
+    required this.isEats,
   });
 
   final String? title;
   final String category;
+  final bool isEats;
 
   void selectProduct(BuildContext context, Product product) {
     Navigator.of(context).push(
@@ -28,6 +28,9 @@ class ProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var productsDBRef =
+        FirebaseDatabase.instance.ref().child(isEats ? 'Eats' : 'Products');
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title!.toString()),
@@ -49,6 +52,7 @@ class ProductsScreen extends StatelessWidget {
                 // Handle list data
                 for (var item in data) {
                   products.add(Product(
+                    shopId: item['shopId'].toString(),
                       id: item['id'].toString(),
                       categoryBelong: item['categoryBelong'].toString(),
                       title: item['title'].toString(),
@@ -59,6 +63,7 @@ class ProductsScreen extends StatelessWidget {
               } else if (data != null && data is Map) {
                 data.forEach((key, value) {
                   products.add(Product(
+                      shopId: value['shopId'].toString(),
                       id: value['id'].toString(),
                       categoryBelong: value['categoryBelong'].toString(),
                       title: value['title'].toString(),

@@ -69,7 +69,7 @@ class _AccountScreen extends State<AccountScreen> {
                 IconButton(
                   onPressed: () {
                     FirebaseAuth.instance.signOut();
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => const PhoneNumberScreen(),
                       ),

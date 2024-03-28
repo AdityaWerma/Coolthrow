@@ -21,12 +21,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
           label: 'Categories',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.offline_pin_rounded),
-          label: 'Orders',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.fastfood),
           label: 'Eats',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.offline_pin_rounded),
+          label: 'Orders',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_circle_outlined),
